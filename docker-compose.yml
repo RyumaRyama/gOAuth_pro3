@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: ./web
+    command: go run main.go
+    volumes:
+      - ./web:/app
+    ports:
+      - 1124:1124
+
