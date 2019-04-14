@@ -1,9 +1,11 @@
-FROM golang:1.12.4
+FROM golang:1.12.4-alpine
 
-RUN go get github.com/labstack/echo/...
-RUN go get -u gopkg.in/godo.v2/cmd/godo
+WORKDIR /go/src/app
+COPY . /go/src/app
 
-WORKDIR /app
-COPY . /app
+ENV GO111MODULE=on
+
+RUN apk add --no-cache git \
+    && go get github.com/oxequa/realize
 
 CMD ["go", "run", "main.go"]
