@@ -32,12 +32,13 @@ func main(){
   e.Renderer = t
 
   e.Static("/public", "./public/")
+  e.Static("/public/css", "./public/css")
 
-  e.GET("/hello", func(c echo.Context) error {
+  e.GET("/", func(c echo.Context) error {
     return c.String(http.StatusOK, "こんにちは")
   })
 
-  e.GET("/login", func(c echo.Context) error {
+  e.GET("/sample", func(c echo.Context) error {
 
     data := struct {
       ServiceInfo
@@ -47,12 +48,17 @@ func main(){
       Content_d string
     } {
       ServiceInfo: serviceInfo,
-      Content_a: "goを使って",
+      Content_a: "goを使っててて",
       Content_b: "oauth認証をしよう。",
       Content_c: "アイウエオ",
       Content_d: "かきくけこ",
     }
+
     return c.Render(http.StatusOK, "sample", data)
+  })
+
+  e.GET("/login", func(c echo.Context) error {
+    return c.Render(http.StatusOK, "login", "momo")
   })
 
   e.Logger.Fatal(e.Start(":1124"))
