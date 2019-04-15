@@ -36,9 +36,9 @@ services:
     links:
       - mysql
     build: ./web
-    command: go run main.go
+    command: realize start --run --no-config
     volumes:
-      - ./web:/app
+      - ./web:/go/src/app
     ports:
       - 1124:1124
 
