@@ -1,4 +1,4 @@
-version: '3'
+iersion: '3'
 services:
   mysql:
        # コンテナに名前をつけることもできる
@@ -38,7 +38,7 @@ services:
     build: ./web
     command: go run main.go
     volumes:
-      - ./web:/app
+      - ./web:/go/src/app
     ports:
       - 1124:1124
 
