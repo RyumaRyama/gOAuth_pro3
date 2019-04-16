@@ -14,9 +14,9 @@ services:
       - "3333:3333"
     # mysqlの設定
     environment:
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: password
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     # docker-compose run実行時に実行される
     # オプションは日本語文の字化けに対するおまじない
     command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
@@ -40,7 +40,11 @@ services:
     volumes:
       - ./web:/go/src/app
     ports:
-      - 1124:1124
+      - 3000:3000
+    environment:
+      - SESSION_SECRET=${SESSION_SECRET}
+      - GOOGLE_KEY=${GOOGLE_KEY}
+      - GOOGLE_SECRET=${GOOGLE_SECRET}
 
   # トップレベルでvolumesを定義すると、各サービスからボリュームを参照できる
 volumes:
