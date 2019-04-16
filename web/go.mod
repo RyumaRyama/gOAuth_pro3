@@ -3,10 +3,7 @@ module app
 go 1.12
 
 require (
-	github.com/labstack/echo v3.3.10+incompatible
-	github.com/labstack/gommon v0.2.8 // indirect
-	github.com/mattn/go-colorable v0.1.1 // indirect
-	github.com/mattn/go-isatty v0.0.7 // indirect
-	github.com/valyala/fasttemplate v1.0.1 // indirect
-	golang.org/x/crypto v0.0.0-20190411191339-88737f569e3a // indirect
+	github.com/gorilla/pat v0.0.0-20180118222023-199c85a7f6d1
+	github.com/markbates/goth v1.50.0
+	github.com/stretchr/objx v0.2.0
 )

@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>メイン画面</title>
+  </head>
+  <body>
+    <div>ユーザーid: {{.UserData.id}}</div>
+    <div>お名前(フルネーム): {{.UserData.name}}</div>
+    <div>お名前(first): {{.UserData.given_name}}</div>
+    <div>お名前(last): {{.UserData.family_name}}</div>
+    <div>Email: {{.UserData.email}}</div>
+    <div>ニックネーム: {{.UserData.nick_name}}</div>
+    <div><img src="{{.UserData.picture}}" title="picture_img" width="128" height="128"></div>
+    
+    <div><a href="/logout">サインアウト</a></div>
+  </body>
+</html>
