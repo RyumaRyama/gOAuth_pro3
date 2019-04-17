@@ -6,6 +6,7 @@ COPY . /go/src/app
 ENV GO111MODULE=on
 
 RUN apk add --no-cache git \
-    && go get github.com/oxequa/realize
+    && go get github.com/oxequa/realize \
+    && go build -o /go/src/app/goauth
 
-CMD ["go","run","main.go"]
+CMD ["/go/src/app/goauth"]

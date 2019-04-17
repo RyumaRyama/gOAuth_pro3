@@ -27,7 +27,7 @@ func init() {
 
     // ①
     goth.UseProviders(
-        google.New(os.Getenv("GOOGLE_KEY"), os.Getenv("GOOGLE_SECRET"), "http://localhost:3000/auth/google/callback"),
+        google.New(os.Getenv("GOOGLE_KEY"), os.Getenv("GOOGLE_SECRET"), "http://"+os.Getenv("HOST")+":"+os.Getenv("PORT")+"/auth/google/callback"),
     )
 }
 
@@ -63,5 +63,5 @@ func main() {
     p.Add("GET", "/", MustAuth(&templateHandler{filename: "index.html"}))
 
     // WEBサーバを起動
-    log.Fatal(http.ListenAndServe(":3000", p))
+    log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), p))
 }
