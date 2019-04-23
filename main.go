@@ -1,6 +1,7 @@
 package main
 
 import (
+  "app/app"
   "log"
   "net/http"
   "os"
@@ -54,11 +55,11 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
   // patを使ってルーティング設定
   p := pat.New()
-  p.Get("/auth/{provider}/callback", callbackHandler)
+  p.Get("/auth/{provider}/callback", app.CallbackHandler)
   p.Get("/auth/{provider}", gothic.BeginAuthHandler)
-  p.Get("/logout", logoutHandler)
+  p.Get("/logout", app.LogoutHandler)
   p.Add("GET", "/login", &templateHandler{filename: "login.html"})
-  p.Add("GET", "/", MustAuth(&templateHandler{filename: "index.html"}))
+  p.Add("GET", "/", app.MustAuth(&templateHandler{filename: "index.html"}))
 
   // WEBサーバを起動
   log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), p))
