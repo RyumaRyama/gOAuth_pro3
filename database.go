@@ -1,49 +1,32 @@
 package main
 
 import (
-  "os"
-  "database/sql"
-  "fmt"
-  _ "github.com/lib/pq"
+   "fmt"
+
+   "github.com/jinzhu/gorm"
+   _ "github.com/lib/pq"
 )
 
 type User struct {
-  ID    string
-  EMAIL string
+   ID int64 `gorm:"primary_key" json:"id"`
+   Name string `json:"name"`
 }
 
-func database() {
-  db, err := sql.Open("postgres", "host="+os.Getenv("PGHOST")+" port=5432 user="+os.Getenv("PGUSER")+" dbname="+os.Getenv("PGDATABASE")+" password="+os.Getenv("PGPASSWORD"))
-  defer db.Close()
+type Users []User
 
-  if err != nil {
-    panic(err)
-  }
+func main() {
+   db, err := gorm.Open("postgres", "user=e165742 password=pw dbname=gOAuth_pro sslmode=disable")
+   if err != nil {
+      panic(err)
+   }
+   defer db.Close()
+   db.AutoMigrate(User{})
+   var user = User{Name: "testname"}
+   db.NewRecord(user)
+   db.Create(&user)
+   db.Save(&user)
 
-  // INSERT
-  var empID string
-  id := 3
-  number := 4444
-  err = db.QueryRow("INSERT INTO employee(emp_id, emp_number) VALUES($1,$2) RETURNING emp_id", id, number).Scan(&empID)
-
-  if err != nil {
-      fmt.Println(err)
-  }
-
-  fmt.Println(empID)
-
-  // SELECT
-  rows, err := db.Query("SELECT * FROM employee")
-
-  if err != nil {
-      fmt.Println(err)
-  }
-
-  var es []User
-  for rows.Next() {
-      var e User
-      rows.Scan(&e.ID, &e.EMAIL)
-      es = append(es, e)
-  }
-  fmt.Printf("%v", es)
+   var users = Users{}
+   db.Find(&users) // SELECT * FROM users;
+   fmt.Println(users)
 }
