@@ -55,9 +55,11 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
   // patを使ってルーティング設定
   p := pat.New()
+  p.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
   p.Get("/auth/{provider}/callback", app.CallbackHandler)
   p.Get("/auth/{provider}", gothic.BeginAuthHandler)
   p.Get("/logout", app.LogoutHandler)
+  p.Add("GET", "/loginSample", &templateHandler{filename: "loginSample.html"})
   p.Add("GET", "/login", &templateHandler{filename: "login.html"})
   p.Add("GET", "/", app.MustAuth(&templateHandler{filename: "index.html"}))
 
