@@ -10,6 +10,7 @@ import (
   "text/template"
 
   "github.com/gorilla/pat"
+  // "github.com/gorilla/mux"
   "github.com/markbates/goth"
   "github.com/markbates/goth/gothic"
   "github.com/markbates/goth/providers/google"
@@ -53,9 +54,11 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+  fs := http.FileServer(http.Dir("templates"))
+    http.Handle("/css/", fs)
   // patを使ってルーティング設定
   p := pat.New()
-  p.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
+  // p.Handle("/resources/", http.StripPrefix("/resources/", http.FileServer(http.Dir("resources/"))))
   p.Get("/auth/{provider}/callback", app.CallbackHandler)
   p.Get("/auth/{provider}", gothic.BeginAuthHandler)
   p.Get("/logout", app.LogoutHandler)
